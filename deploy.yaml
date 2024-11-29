@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shannengzhixiang-pay-ui
+  namespace: dev
+  labels:
+    app: shannengzhixiang-pay-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shannengzhixiang-pay-ui
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: shannengzhixiang-pay-ui
+    spec:
+      hostNetwork: true
+      containers:
+        - name: shannengzhixiang-pay-ui
+          image: repo.internal.hafuhafu.cn/hulu0811/shannengzhixiang-pay-ui:{{.image_tag}}
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: shannengzhixiang-pay-ui
+  namespace: dev
+  labels:
+    app: shannengzhixiang-pay-ui
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    app: shannengzhixiang-pay-ui
+
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: shannengzhixiang-pay-ui
+  namespace: dev
+spec:
+  entryPoints:
+    - inwebsecure
+    - inweb
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`shannengzhixiang-pay-ui.internal.hafuhafu.cn`) || Host(`shannengzhixiang-pay-ui.public.hafuhafu.cn`)
+      services:
+        - name: shannengzhixiang-pay-ui
+          port: 80
