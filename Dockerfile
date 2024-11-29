@@ -5,10 +5,12 @@ WORKDIR /app
 # 安装 pnpm
 # RUN npm install -g pnpm
 
-COPY package.json ./
-COPY .npmrc ./
+COPY package*.json ./
+# COPY .npmrc ./
 
-RUN npm install --legacy-peer-deps --registry=https://registry.npmmirror.com/
+RUN npm config set registry https://registry.npmmirror.com/
+
+RUN npm install
 
 # 构建应用
 COPY . .

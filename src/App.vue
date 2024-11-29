@@ -1,7 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+	import pay from './components/pay.vue'
+</script>
 
 <template>
-	<div>123123123</div>
+	<div>
+		<pay></pay>
+	</div>
 </template>
 
 <style scoped></style>
