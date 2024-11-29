@@ -21,7 +21,7 @@ spec:
         - name: shannengzhixiang-pay-ui
           image: repo.internal.hafuhafu.cn/hulu0811/shannengzhixiang-pay-ui:{{.image_tag}}
           ports:
-            - containerPort: 80
+            - containerPort: 5567
               protocol: TCP
           imagePullPolicy: IfNotPresent
 
@@ -37,8 +37,8 @@ metadata:
 spec:
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 80
+      port: 5567
+      targetPort: 5567
   selector:
     app: shannengzhixiang-pay-ui
 
@@ -60,4 +60,4 @@ spec:
       match: Host(`shannengzhixiang-pay-ui.internal.hafuhafu.cn`) || Host(`shannengzhixiang-pay-ui.public.hafuhafu.cn`)
       services:
         - name: shannengzhixiang-pay-ui
-          port: 80
+          port: 5567
