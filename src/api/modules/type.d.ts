@@ -18,6 +18,6 @@ interface IPaymentParamsResponse {
 	returl: string
 	sign: string
 	signtype: string
-	trxamt: string
+	trxamt: number
 	version: string
 }

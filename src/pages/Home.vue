@@ -23,15 +23,18 @@
 	const qrCodeValue = ref('')
 
 	const handlePay = () => {
-		// qrCodeValue.value = amount.value // 生成收款码的逻辑
+		// 获取当前base url
+		const baseUrl = window.location.origin
+		console.log(baseUrl)
+
 		// 二维码扫码跳转到百度搜索
-		// qrCodeValue.value = `https://www.baidu.com/s?wd=${amount.value}`
-		router.push({
-			path: '/loading',
-			query: {
-				price: amount.value
-			}
-		})
+		qrCodeValue.value = `${baseUrl}/loading?price=${Number(amount.value) * 100}`
+		// router.push({
+		// 	path: '/loading',
+		// 	query: {
+		// 		price: Number(amount.value) * 100
+		// 	}
+		// })
 	}
 </script>
 

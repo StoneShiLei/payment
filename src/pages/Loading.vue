@@ -1,14 +1,20 @@
 <template>
 	<div class="flex-center">
 		<loading></loading>
+
+		<form :action="config.payURL" method="post">
+			<!-- <button type="submit">立即支付</button> -->
+		</form>
 	</div>
 </template>
 
 <script setup lang="ts">
-	import { useRoute } from 'vue-router'
-	import loading from '../components/loading.vue'
-	import { fetchOrderSubmit, fetchPaymentParams } from '../api/modules'
 	import { ref } from 'vue'
+	import { fetchPaymentParams } from '../api/modules'
+	import { useRoute } from 'vue-router'
+	import { config } from '../api/request/config'
+	import loading from '../components/loading.vue'
+
 	const route = useRoute()
 	console.log(route.query.price)
 	const paymentParams = ref<IPaymentParamsData>({
@@ -20,13 +26,20 @@
 
 	fetchPaymentParams(paymentParams.value).then(res => {
 		console.log(res, '支付参数')
-		fetchOrderSubmit(res.data)
-			.then(res => {
-				console.log(res, '订单提交')
+
+		const form = document.querySelector('form')
+		// res.data.trxamt = res.data.trxamt * 100
+		if (form) {
+			Object.keys(res.data).forEach(key => {
+				const input = document.createElement('input')
+				input.type = 'hidden'
+				input.name = key
+				input.value = res.data[key as keyof IPaymentParamsResponse] as string
+				form.appendChild(input)
 			})
-			.catch(err => {
-				console.log(err, 'err')
-			})
+
+			form.submit()
+		}
 	})
 </script>
 
