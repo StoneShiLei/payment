@@ -2,16 +2,7 @@
 	<div class="payment-wrapper">
 		<h1 class="title">闪能智享</h1>
 		<div class="input-container">
-			<input
-				class="amount-input"
-				id="amount"
-				type="number"
-				max="1000"
-				min="1"
-				placeholder=""
-				v-model="amount"
-				required />
-			<label class="floating-label" for="amount">充值金额</label>
+			<material-input label="充值金额" v-model="amount"></material-input>
 		</div>
 		<button class="pay-button" @click="handlePay">生成收款码</button>
 		<div class="qr-code" v-if="qrCodeValue">
@@ -25,6 +16,7 @@
 	import { ref } from 'vue'
 	import QrCodeVue from 'qrcode.vue'
 	import { useRouter } from 'vue-router'
+	import materialInput from '../components/material-input.vue'
 
 	const router = useRouter()
 	const amount = ref('')

@@ -1,11 +1,9 @@
 <script setup lang="ts">
-	import pay from './components/pay.vue'
+	import { RouterView } from 'vue-router'
 </script>
 
 <template>
-	<div>
-		<pay></pay>
-	</div>
+	<router-view></router-view>
 </template>
 
 <style scoped></style>
