@@ -9,7 +9,7 @@
 					:formatter="formatter"
 					format-trigger="onBlur"
 					label="充值金额"
-					placeholder="请输入充值金额(0.01 ~ 99999.00)"
+					placeholder="请输入充值金额"
 					required />
 				<van-field v-model="params.name" label="客户名称" required placeholder="请输入" />
 				<van-field
@@ -213,6 +213,7 @@
 
 			.pay-button {
 				font-size: 16px;
+				width: 240px;
 				// padding: 10px 20px;
 			}
 		}
