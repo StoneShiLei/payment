@@ -48,9 +48,9 @@
 	const showPicker = ref(false)
 	const columns = ref([{ text: '充电卡', value: '充电卡' }])
 	const params = ref({
-		amount: '0.01',
-		name: '充电卡',
-		businessType: '',
+		amount: '',
+		name: '',
+		businessType: '充电卡',
 		remark: ''
 	})
 	const qrCodeValue = ref('')
