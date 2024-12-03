@@ -23,20 +23,12 @@
 				<van-popup v-model:show="showPicker" round position="bottom">
 					<van-picker :columns="columns" @cancel="showPicker = false" @confirm="onConfirm" />
 				</van-popup>
-				<van-field
-					v-model="params.remark"
-					label="备注"
-					rows="3"
-					autosize
-					type="textarea"
-					maxlength="100"
-					placeholder="请输入"
-					show-word-limit />
+				<van-field v-model="params.remark" label="备注" placeholder="请输入" />
 			</van-cell-group>
 		</div>
 		<button class="pay-button" @click="handlePay">生成收款码</button>
 		<div class="qr-code" v-if="qrCodeValue">
-			<QrCodeVue :value="qrCodeValue" level="H" />
+			<QrCodeVue :value="qrCodeValue" level="H" size="240" />
 			<p class="desc">请使用支付宝或微信扫码支付</p>
 		</div>
 	</div>
@@ -114,6 +106,8 @@
 	$label-color: #555;
 	$input-border-color: #ccc;
 	$input-focus-color: $primary-color;
+
+	
 
 	.payment-wrapper {
 		margin: 0 auto;
@@ -194,6 +188,8 @@
 			}
 		}
 
+
+
 		.qr-code {
 			margin-top: 20px;
 		}
@@ -217,7 +213,7 @@
 
 			.pay-button {
 				font-size: 16px;
-				padding: 10px 20px;
+				// padding: 10px 20px;
 			}
 		}
 	}
