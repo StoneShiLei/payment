@@ -18,8 +18,8 @@
 			</div>
 			<div class="shadow scale"></div>
 			<div class="message">
-				<h1 class="alert">Success!</h1>
-				<p>{{ message }}</p>
+				<h1 class="alert">支付成功！</h1>
+				<!-- <p>{{ message }}</p> -->
 			</div>
 		</div>
 
@@ -33,8 +33,8 @@
 			</div>
 			<div class="shadow move"></div>
 			<div class="message">
-				<h1 class="alert">Error!</h1>
-				<p>{{ message }}</p>
+				<h1 class="alert">支付失败！</h1>
+				<!-- <p>{{ message }}</p> -->
 				<p>{{ errMessage }}</p>
 			</div>
 		</div>

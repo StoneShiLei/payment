@@ -1,6 +1,6 @@
 <template>
 	<div class="payment-wrapper">
-		<h1 class="title">闪能智享</h1>
+		<h1 class="title"></h1>
 		<div class="input-container">
 			<input
 				class="amount-input"
