@@ -8,36 +8,21 @@
 		<br />
 		{{ errMessage }}
 		<br /> -->
-		<div id="success-box" v-if="status === '0'">
-			<div class="dot"></div>
-			<div class="dot two"></div>
-			<div class="face">
-				<div class="eye"></div>
-				<div class="eye right"></div>
-				<div class="mouth happy"></div>
+
+		<div id="success-box" v-if="status === '0'" class="result-container">
+			<div class="circle success-circle">
+				<span class="icon">✓</span>
 			</div>
-			<div class="shadow scale"></div>
-			<div class="message">
-				<h1 class="alert">支付成功！</h1>
-				<!-- <p>{{ message }}</p> -->
-			</div>
+			<div class="result-text">支付成功</div>
 		</div>
 
-		<div id="error-box" v-if="['1', '3'].includes(status)">
-			<div class="dot"></div>
-			<div class="dot two"></div>
-			<div class="face2">
-				<div class="eye"></div>
-				<div class="eye right"></div>
-				<div class="mouth sad"></div>
+		<div id="error-box" v-if="['1', '3'].includes(status)" class="result-container">
+			<div class="circle error-circle">
+				<span class="icon">✕</span>
 			</div>
-			<div class="shadow move"></div>
-			<div class="message">
-				<h1 class="alert">支付失败！</h1>
-				<!-- <p>{{ message }}</p> -->
-				<p>{{ errMessage }}</p>
-			</div>
+			<div class="result-text">支付失败</div>
 		</div>
+
 
 		<div class="flex-center" v-if="status === '2'">
 			<svg viewBox="25 25 50 50">
@@ -90,6 +75,43 @@
 	$secondary: #99dbb4;
 	$font: sans-serif;
 
+	.result-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		height: 100vh;
+	}
+
+	.circle {
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 20px;
+	}
+
+	.success-circle {
+		background-color: #52c41a;
+	}
+
+	.error-circle {
+		background-color: #ff4d4f;
+	}
+
+	.icon {
+		color: white;
+		font-size: 40px;
+		font-weight: bold;
+	}
+
+	.result-text {
+		font-size: 20px;
+		font-weight: bold;
+	}
+
 	.flex-center {
 		height: 50vh;
 		display: flex;
@@ -107,37 +129,10 @@
 		text-transform: uppercase;
 	}
 
-	.green {
-		color: darken($secondary, 20%);
-	}
-
-	.red {
-		color: darken($error, 10%);
-	}
-
-	.alert {
-		font-weight: 700;
-		letter-spacing: 5px;
-	}
-
-	p {
-		margin-top: -5px;
-		font-size: 0.5em;
-		font-weight: 100;
-		color: darken($dark, 10%);
-		letter-spacing: 1px;
-	}
-
-	button,
-	.dot {
-		cursor: pointer;
-	}
-
 	#success-box {
 		position: absolute;
 		width: 100%;
 		height: 100%;
-		background: linear-gradient(to bottom right, $success 40%, $secondary 100%);
 		box-shadow: 5px 5px 20px rgba($gray, 10%);
 		perspective: 40px;
 	}
@@ -146,88 +141,7 @@
 		position: absolute;
 		width: 100%;
 		height: 100%;
-		background: linear-gradient(to bottom left, $error 40%, $orange 100%);
 		box-shadow: 5px 5px 20px rgba($gray, 10%);
-	}
-
-	.dot {
-		width: 8px;
-		height: 8px;
-		background: $white;
-		border-radius: 50%;
-		position: absolute;
-		top: 4%;
-		right: 6%;
-		&:hover {
-			background: darken($white, 20%);
-		}
-	}
-
-	.two {
-		right: 12%;
-		opacity: 0.5;
-	}
-
-	.face {
-		position: absolute;
-		width: 22%;
-		height: 15%;
-		background: $white;
-		border-radius: 50%;
-		border: 1px solid $dark;
-		top: 26%;
-		left: 39%;
-		z-index: 2;
-		animation: bounce 1s ease-in infinite;
-	}
-
-	.face2 {
-		position: absolute;
-		width: 22%;
-		height: 22%;
-		background: $white;
-		border-radius: 50%;
-		border: 1px solid $dark;
-		top: 21%;
-		left: 37.5%;
-		z-index: 2;
-		animation: roll 3s ease-in-out infinite;
-	}
-
-	.eye {
-		position: absolute;
-		width: 5px;
-		height: 5px;
-		background: $dark;
-		border-radius: 50%;
-		top: 40%;
-		left: 20%;
-	}
-
-	.right {
-		left: 68%;
-	}
-
-	.mouth {
-		position: absolute;
-		top: 43%;
-		left: 41%;
-		width: 7px;
-		height: 7px;
-		border-radius: 50%;
-	}
-
-	.happy {
-		border: 2px solid;
-		border-color: transparent $dark $dark transparent;
-		transform: rotate(45deg);
-	}
-
-	.sad {
-		top: 49%;
-		border: 2px solid;
-		border-color: $dark transparent transparent $dark;
-		transform: rotate(45deg);
 	}
 
 	.shadow {
@@ -242,77 +156,12 @@
 		z-index: 1;
 	}
 
-	.scale {
-		animation: scale 1s ease-in infinite;
-	}
-	.move {
-		animation: move 3s ease-in-out infinite;
-	}
-
 	.message {
 		position: absolute;
 		width: 100%;
 		text-align: center;
 		height: 40%;
 		top: 47%;
-	}
-
-	.button-box {
-		position: absolute;
-		background: $white;
-		width: 50%;
-		height: 15%;
-		border-radius: 20px;
-		top: 73%;
-		left: 25%;
-		outline: 0;
-		border: none;
-		box-shadow: 2px 2px 10px rgba($dark, 0.5);
-		transition: all 0.5s ease-in-out;
-		&:hover {
-			background: darken($white, 5%);
-			transform: scale(1.05);
-			transition: all 0.3s ease-in-out;
-		}
-	}
-
-	@keyframes bounce {
-		50% {
-			transform: translateY(-10px);
-		}
-	}
-
-	@keyframes scale {
-		50% {
-			transform: scale(0.9);
-		}
-	}
-
-	@keyframes roll {
-		0% {
-			transform: rotate(0deg);
-			left: 25%;
-		}
-		50% {
-			left: 60%;
-			transform: rotate(168deg);
-		}
-		100% {
-			transform: rotate(0deg);
-			left: 25%;
-		}
-	}
-
-	@keyframes move {
-		0% {
-			left: 25%;
-		}
-		50% {
-			left: 60%;
-		}
-		100% {
-			left: 25%;
-		}
 	}
 
 	svg {
