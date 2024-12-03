@@ -49,9 +49,9 @@
 	const columns = ref([{ text: '充电卡', value: '充电卡' }])
 	const params = ref({
 		amount: '0.01',
-		name: 'North',
+		name: '充电卡',
 		businessType: '',
-		remark: '测试'
+		remark: ''
 	})
 	const qrCodeValue = ref('')
 
