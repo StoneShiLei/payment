@@ -9,6 +9,7 @@
 		{{ errMessage }}
 		<br /> -->
 
+		
 		<div id="success-box" v-if="status === '0'" class="result-container">
 			<div class="circle success-circle">
 				<span class="icon">✓</span>
