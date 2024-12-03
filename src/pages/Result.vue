@@ -1,13 +1,13 @@
 <template>
 	<div>
-		{{ route.query }}
+		<!-- {{ route.query }}
 		<br />
 		{{ status || '--' }}
 		<br />
 		{{ message }}
 		<br />
 		{{ errMessage }}
-		<br />
+		<br /> -->
 		<div id="success-box" v-if="status === '0'">
 			<div class="dot"></div>
 			<div class="dot two"></div>
@@ -61,9 +61,9 @@
 
 		try {
 			const res = await fetchPaymentResult(route.query.trxid as string)
-			// status.value = res.data.trxstatus
-			// message.value = ['交易成功', '交易不存在', '交易处理中', '交易失败'][res.data.trxstatus as unknown as number]
-			// errMessage.value = res.data.errmsg
+			status.value = res.data.trxstatus
+			message.value = ['交易成功', '交易不存在', '交易处理中', '交易失败'][res.data.trxstatus as unknown as number]
+			errMessage.value = res.data.errmsg
 			message.value = JSON.stringify(res.data)
 
 			if (res.data.trxstatus === '2') {
