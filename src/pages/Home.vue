@@ -2,7 +2,37 @@
 	<div class="payment-wrapper">
 		<h1 class="title">闪能智享</h1>
 		<div class="input-container">
-			<material-input label="充值金额" v-model="amount"></material-input>
+			<van-cell-group>
+				<van-field
+					v-model="params.amount"
+					type="number"
+					:formatter="formatter"
+					format-trigger="onBlur"
+					label="充值金额"
+					placeholder="请输入充值金额(0.01 ~ 99999.00)"
+					required />
+				<van-field v-model="params.name" label="客户名称" required placeholder="请输入" />
+				<van-field
+					v-model="params.businessType"
+					is-link
+					readonly
+					label="业务类型"
+					placeholder="请选择"
+					required
+					@click="showPicker = true" />
+				<van-popup v-model:show="showPicker" round position="bottom">
+					<van-picker :columns="columns" @cancel="showPicker = false" @confirm="onConfirm" />
+				</van-popup>
+				<van-field
+					v-model="params.remark"
+					label="备注"
+					rows="3"
+					autosize
+					type="textarea"
+					maxlength="100"
+					placeholder="请输入"
+					show-word-limit />
+			</van-cell-group>
 		</div>
 		<button class="pay-button" @click="handlePay">生成收款码</button>
 		<div class="qr-code" v-if="qrCodeValue">
@@ -13,28 +43,66 @@
 </template>
 
 <script setup lang="ts">
-	import { ref } from 'vue'
 	import QrCodeVue from 'qrcode.vue'
-	import { useRouter } from 'vue-router'
-	import materialInput from '../components/material-input.vue'
 
-	const router = useRouter()
-	const amount = ref('')
+	const showPicker = ref(false)
+	const columns = ref([{ text: '充电卡', value: '充电卡' }])
+	const params = ref({
+		amount: '0.01',
+		name: 'North',
+		businessType: '',
+		remark: '测试'
+	})
 	const qrCodeValue = ref('')
 
-	const handlePay = () => {
-		// 获取当前base url
-		const baseUrl = window.location.origin
-		console.log(baseUrl)
+	const formatter = (value: string) => {
+		// 格式化金额，最大值为 9999、最小值为 1、小数点后最多保留 2 位
+		if (value === '') {
+			return ''
+		}
 
-		// 二维码扫码跳转到百度搜索
-		qrCodeValue.value = `${baseUrl}/loading?price=${Number(amount.value) * 100}`
-		// router.push({
-		// 	path: '/loading',
-		// 	query: {
-		// 		price: Number(amount.value) * 100
-		// 	}
-		// })
+		// 限制最大值为9999，最小值为1
+		if (Number(value) > 99999) {
+			value = '99999'
+		} else if (Number(value) < 0.01) {
+			value = '0.01'
+		}
+
+		// 保留最多两位小数
+		value = parseFloat(value).toFixed(2)
+
+		// 格式化金额，例如千分位分隔符
+		return value
+	}
+
+	const onConfirm = ({ selectedOptions }: { selectedOptions: Array<{ text: string }> }) => {
+		console.log(selectedOptions[0].text)
+
+		params.value.businessType = selectedOptions[0].text
+		showPicker.value = false
+	}
+
+	const handlePay = () => {
+		if (!params.value.amount) {
+			showToast('请输入充值金额')
+			return
+		}
+
+		if (!params.value.name) {
+			showToast('请输入客户名称')
+			return
+		}
+
+		if (!params.value.businessType) {
+			showToast('请选择业务类型')
+			return
+		}
+		console.log(params.value)
+
+		const baseUrl = window.location.origin
+		qrCodeValue.value = `${baseUrl}/loading?price=${Number(params.value.amount) * 100}&body=${
+			params.value.businessType
+		}&remark=${params.value.name}|${params.value.remark}`
 	}
 </script>
 
@@ -49,7 +117,7 @@
 
 	.payment-wrapper {
 		margin: 0 auto;
-		padding: 20px;
+		padding: 12px;
 		text-align: center;
 		border-radius: 10px;
 		transition: transform 0.3s;
@@ -63,6 +131,9 @@
 		.input-container {
 			position: relative;
 			margin-bottom: 20px;
+			border-radius: 8px;
+			box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+			padding: 6px;
 
 			.amount-input {
 				width: 100%;

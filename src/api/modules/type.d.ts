@@ -21,3 +21,9 @@ interface IPaymentParamsResponse {
 	trxamt: number
 	version: string
 }
+
+interface IPaymentResultResponse {
+	errmsg: string
+	trxid: string
+	trxstatus: string
+}

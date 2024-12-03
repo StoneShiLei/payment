@@ -17,18 +17,16 @@
 
 	const route = useRoute()
 	console.log(route.query.price)
+	const baseUrl = window.location.origin
 	const paymentParams = ref<IPaymentParamsData>({
 		price: (route.query.price as string) || '0',
-		body: '订单标题',
-		remark: '备注信息|备注信息',
-		returl: '/'
+		body: route.query.body as string,
+		remark: route.query.remark as string,
+		returl: baseUrl + '/result'
 	})
 
 	fetchPaymentParams(paymentParams.value).then(res => {
-		console.log(res, '支付参数')
-
 		const form = document.querySelector('form')
-		// res.data.trxamt = res.data.trxamt * 100
 		if (form) {
 			Object.keys(res.data).forEach(key => {
 				const input = document.createElement('input')

@@ -1,4 +1,4 @@
-import { pay_post, post } from '../request/instance'
+import { get, pay_post, post } from '../request/instance'
 
 export const fetchPaymentParams = (data: IPaymentParamsData) => {
 	return post<IPaymentParamsResponse>('/snzx/evcs/pay/params', data)
@@ -10,4 +10,8 @@ export const fetchOrderSubmit = (data: IPaymentParamsResponse) => {
 			'Content-Type': 'application/x-www-form-urlencoded'
 		}
 	})
+}
+
+export const fetchPaymentResult = (id: string) => {
+	return get<IPaymentResultResponse>('/snzx/evcs/pay/query', { trxid: id })
 }
