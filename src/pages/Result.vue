@@ -1,13 +1,13 @@
 <template>
 	<div>
-		{{ route.query }}
+		<!-- {{ route.query }}
 		<br />
 		{{ status || '--' }}
 		<br />
 		{{ message }}
 		<br />
 		{{ errMessage }}
-		<br />
+		<br /> -->
 
 		<div id="success-box" v-if="status === '0'" class="result-container">
 			<div class="circle success-circle">
