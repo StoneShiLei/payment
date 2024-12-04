@@ -1,5 +1,5 @@
 # 构建阶段
-FROM node:20-alpine AS build
+FROM crpi-1bbzqyl2h4qrr1qa.cn-beijing.personal.cr.aliyuncs.com/shannengzhixiang_pub/node:20-alpine AS build
 WORKDIR /app
 
 # 安装 pnpm
@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # 部署阶段
-FROM nginx:1.24-alpine
+FROM crpi-1bbzqyl2h4qrr1qa.cn-beijing.personal.cr.aliyuncs.com/shannengzhixiang_pub/nginx:1.24-alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 
