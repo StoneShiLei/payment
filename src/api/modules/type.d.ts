@@ -1,11 +1,12 @@
-interface IPaymentParamsData {
+interface ICreateOrderData {
 	body: string
 	price: string
 	remark: string
 	returl: string
+	reqsn: string
 }
 
-interface IPaymentParamsResponse {
+interface ICreateOrderResponse {
 	appid: string
 	body: string
 	charset: string
@@ -22,7 +23,7 @@ interface IPaymentParamsResponse {
 	version: string
 }
 
-interface IPaymentResultResponse {
+interface IQueryOrderResponse {
 	errmsg: string
 	trxid: string
 	trxstatus: string

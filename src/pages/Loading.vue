@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 	import { ref } from 'vue'
-	import { fetchPaymentParams } from '../api/modules'
+	import { fetchCreateOrder } from '../api/modules'
 	import { useRoute } from 'vue-router'
 	import { config } from '../api/request/config'
 	import loading from '../components/loading.vue'
@@ -18,14 +18,18 @@
 	const route = useRoute()
 	console.log(route.query.price)
 	const baseUrl = window.location.origin
+
 	const paymentParams = ref<IPaymentParamsData>({
 		price: (route.query.price as string) || '0',
 		body: route.query.body as string,
 		remark: route.query.remark as string,
-		returl: baseUrl + '/result'
+		returl: baseUrl + '/result',
+		reqsn: route.query.reqsn,
 	})
 
-	fetchPaymentParams(paymentParams.value).then(res => {
+	paymentParams.value.reqsn = generateOrderNumber()
+
+	fetchCreateOrder(paymentParams.value).then(res => {
 		const form = document.querySelector('form')
 		if (form) {
 			Object.keys(res.data).forEach(key => {

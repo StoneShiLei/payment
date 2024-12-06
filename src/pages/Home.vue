@@ -36,16 +36,21 @@
 
 <script setup lang="ts">
 	import QrCodeVue from 'qrcode.vue'
+	import Swal from 'sweetalert2'
 
+	const createForm = () => ({
+				amount: '',
+				name: '',
+				businessType: '充电卡',
+				remark: ''
+			})
+			
 	const showPicker = ref(false)
 	const columns = ref([{ text: '充电卡', value: '充电卡' }])
-	const params = ref({
-		amount: '',
-		name: '',
-		businessType: '充电卡',
-		remark: ''
-	})
+	const params = ref(createForm())
 	const qrCodeValue = ref('')
+
+
 
 	const formatter = (value: string) => {
 		// 格式化金额，最大值为 9999、最小值为 1、小数点后最多保留 2 位
@@ -74,6 +79,21 @@
 		showPicker.value = false
 	}
 
+	const generateOrderNumber = () => {
+		const now = new Date()
+		const year = now.getFullYear()
+		const month = String(now.getMonth() + 1).padStart(2, '0')
+		const day = String(now.getDate()).padStart(2, '0')
+		const hour = String(now.getHours()).padStart(2, '0')
+		const minute = String(now.getMinutes()).padStart(2, '0')
+		const second = String(now.getSeconds()).padStart(2, '0')
+		const millisecond = String(now.getMilliseconds()).padStart(3, '0')
+		const random = String(Math.floor(Math.random() * 10000)).padStart(4, '0')
+		
+		return `${year}${month}${day}${hour}${minute}${second}${millisecond}${random}`
+	}
+	
+
 	const handlePay = () => {
 		if (!params.value.amount) {
 			showToast('请输入充值金额')
@@ -92,9 +112,18 @@
 		console.log(params.value)
 
 		const baseUrl = window.location.origin
-		qrCodeValue.value = `${baseUrl}/loading?price=${Number(params.value.amount) * 100}&body=${
+		qrCodeValue.value = `${baseUrl}/loading?reqsn=${generateOrderNumber()}&price=${Number(params.value.amount) * 100}&body=${
 			params.value.businessType
 		}&remark=${params.value.name}|${params.value.remark}`
+
+		Swal.fire({
+			title: "客户已支付完成",
+			text: "请重新生成二维码",
+			icon: "success"
+		}).then(() =>{
+			params.value = createForm()
+			qrCodeValue.value = ''
+		});
 	}
 </script>
 

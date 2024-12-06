@@ -9,7 +9,7 @@
 		{{ errMessage }}
 		<br /> -->
 
-		
+
 		<div id="success-box" v-if="status === '0'" class="result-container">
 			<div class="circle success-circle">
 				<span class="icon">✓</span>
@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-	import { fetchPaymentResult } from '../api/modules'
+	import { fetchQueryOrder } from '../api/modules'
 
 	const route = useRoute()
 	const status = ref('2')
@@ -46,7 +46,7 @@
 		if (!route.query.trxid) return showToast('缺少trxid参数')
 
 		try {
-			const res = await fetchPaymentResult(route.query.trxid as string)
+			const res = await fetchQueryOrder(route.query.trxid as string)
 			status.value = res.data.trxstatus
 			message.value = ['交易成功', '交易不存在', '交易处理中', '交易失败'][res.data.trxstatus as unknown as number]
 			errMessage.value = res.data.errmsg
