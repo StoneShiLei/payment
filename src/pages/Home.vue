@@ -116,14 +116,14 @@
 			params.value.businessType
 		}&remark=${params.value.name}|${params.value.remark}`
 
-		Swal.fire({
-			title: "客户已支付完成",
-			text: "请重新生成二维码",
-			icon: "success"
-		}).then(() =>{
-			params.value = createForm()
-			qrCodeValue.value = ''
-		});
+		// Swal.fire({
+		// 	title: "客户已支付完成",
+		// 	text: "请重新生成二维码",
+		// 	icon: "success"
+		// }).then(() =>{
+		// 	params.value = createForm()
+		// 	qrCodeValue.value = ''
+		// });
 	}
 </script>
 
