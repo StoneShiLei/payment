@@ -50,6 +50,19 @@
 	const params = ref(createForm())
 	const qrCodeValue = ref('')
 
+	const generateOrderNumber = () => {
+		const now = new Date()
+		const year = now.getFullYear()
+		const month = String(now.getMonth() + 1).padStart(2, '0')
+		const day = String(now.getDate()).padStart(2, '0')
+		const hour = String(now.getHours()).padStart(2, '0')
+		const minute = String(now.getMinutes()).padStart(2, '0')
+		const second = String(now.getSeconds()).padStart(2, '0')
+		const millisecond = String(now.getMilliseconds()).padStart(3, '0')
+		const random = String(Math.floor(Math.random() * 10000)).padStart(4, '0')
+		
+		return `${year}${month}${day}${hour}${minute}${second}${millisecond}${random}`
+	}
 
 
 	const formatter = (value: string) => {
@@ -77,20 +90,6 @@
 
 		params.value.businessType = selectedOptions[0].text
 		showPicker.value = false
-	}
-
-	const generateOrderNumber = () => {
-		const now = new Date()
-		const year = now.getFullYear()
-		const month = String(now.getMonth() + 1).padStart(2, '0')
-		const day = String(now.getDate()).padStart(2, '0')
-		const hour = String(now.getHours()).padStart(2, '0')
-		const minute = String(now.getMinutes()).padStart(2, '0')
-		const second = String(now.getSeconds()).padStart(2, '0')
-		const millisecond = String(now.getMilliseconds()).padStart(3, '0')
-		const random = String(Math.floor(Math.random() * 10000)).padStart(4, '0')
-		
-		return `${year}${month}${day}${hour}${minute}${second}${millisecond}${random}`
 	}
 	
 

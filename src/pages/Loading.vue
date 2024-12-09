@@ -27,8 +27,6 @@
 		reqsn: route.query.reqsn,
 	})
 
-	paymentParams.value.reqsn = generateOrderNumber()
-
 	fetchCreateOrder(paymentParams.value).then(res => {
 		const form = document.querySelector('form')
 		if (form) {
